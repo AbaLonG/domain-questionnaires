@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:form>
+    <div id="addFieldForm"
+         style="width: 450px; margin-left: 40px; margin-top: 5px;">
+        <div id="leftLabels" style="float: left; width: 90px; height: 300px">
+            <h:outputLabel value="Label" styleClass="labelClass" style="margin-top: 35px"/>
+            <h:outputLabel value="Type" styleClass="labelClass" style="margin-top: 45px"/>
+            <h:outputLabel value="Options" styleClass="labelClass" style="margin-top: 35px"/>
+        </div>
+        <div id="rightInput" style="float: right; width: 350px; height: 300px">
+            <div style="height: 300px">
+                <p:inputText id="newFieldLabel" value="#{newFieldBean.label}"
+                             style="height: 40px; margin-top: 20px; margin-left: 20px;
+                                    background-color: white; box-shadow: none; border: 1px solid gainsboro;
+                                    border-radius: 5px; width: 80%; font-size: 20px;"/>
+
+                <p:selectOneMenu id="newFieldType" value="#{newFieldBean.stringType}"
+                                 style="height: 45px; margin-top: 20px; margin-left: 20px;
+                                        background-color: white; box-shadow: none; border: 1px solid gainsboro;
+                                        border-radius: 5px; width: 71%; font-size: 20px;">
+                    <f:selectItem itemLabel="Single line text" itemValue="Single line text"/>
+                    <f:selectItem itemLabel="Multiline text" itemValue="Multiline text"/>
+                    <f:selectItem itemLabel="Combobox" itemValue="Combobox"/>
+                    <f:selectItem itemLabel="Radio button" itemValue="Radio button"/>
+                    <f:selectItem itemLabel="Date" itemValue="Date"/>
+                    <f:selectItem itemLabel="Checkbox" itemValue="Checkbox"/>
+                </p:selectOneMenu>
+
+                <p:inputTextarea id="newFieldOptions" autoResize="false" rows="5" value="#{newFieldBean.fullOptions}"
+                                 style="margin-top: 20px; margin-left: 20px;
+                                        background-color: white; box-shadow: none; border: 1px solid gainsboro;
+                                        border-radius: 5px; width: 80%; font-size: 20px;"/>
+            </div>
+        </div>
+        <h:panelGrid columns="4" style="margin-left: 27%; width: 260px;">
+            <p:selectBooleanCheckbox value="#{newFieldBean.required}"/>
+            <h:outputText value="Required"
+                          style="font-family: Verdana; text-align: left; margin-left: 0;
+                                 font-size: 16px; font-weight: bold"/>
+            <p:selectBooleanCheckbox value="#{newFieldBean.active}"/>
+            <h:outputText value="Is Active"
+                          style="font-family: Verdana; text-align: left; margin-left: 0;
+                                 font-size: 16px; font-weight: bold"/>
+        </h:panelGrid>
+    </div>
+    <div id="footerForm" style="width: 45%; float: right; margin-top: 10px; width: 100%; margin-top: 80px;
+                                border-top: 1px solid gainsboro; padding-top: 23px; background-color: whitesmoke;
+                                height: 61px;">
+        <div id="buttons" style="float: right; margin-right: 10px;">
+            <p:commandButton styleClass="formButton" value="CANCEL" onclick="PF('dlg').close()"
+                             style="color: black; background-color: white; font-size: 16px;
+                                    border: 1px solid gainsboro; text-shadow: none;"/>
+            <p:commandButton styleClass="formButton" value="SAVE" action="#{newFieldBean.saveField}" update="msgs"
+                             style="color: white; background-color: dodgerblue; text-shadow: none;
+                                    border: none; box-shadow: inset 0px 0px 0px 20px dodgerblue;
+                                    font-size: 16px;"/>
+            <p:growl id="msgs" showDetail="true" />
+        </div>
+    </div>
+</h:form>
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Log In</title>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <!-- redirect user if he has already logged -->
+            <f:event type="preRenderView" listener="#{profileBean.redirect}" />
+        </f:metadata>
+        <div id="centerForm">
+            <h1 id="logoText">LOGO<span style="color: dodgerblue">TYPE</span></h1>
+            <h2 id="loginText">Log in</h2>
+            <div id="mainForm">
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="10" id="mainGrid" style="width: 100%;">
+                        <p:inputText value="#{profileBean.email}" class="inputText" placeholder="Email" required="true"/>
+                        <p:password value="#{profileBean.password}" class="inputText" placeholder="Password" required="true"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" id="settingsGrid" style="width: 100%">
+                        <p:selectBooleanCheckbox value="#{profileBean.remember}" style="margin-left: 50%; margin-top: 20%"/>
+                        <h:outputText value="Remember me" style="font-family: Verdana; text-align: left; margin-left: 7%;
+                                             font-size: 16px; font-weight: bold"/>
+                        <p:link value="Forgot your password?"
+                                       style="font-family: Verdana; text-transform: none; color: dodgerblue; float: right;
+                                              text-decoration: none; font-size: 16px; font-weight: bold; margin-bottom: 1%"/>
+                    </h:panelGrid>
+                    <p:commandButton action="#{profileBean.doLogin}" value="LOG IN" id="loginButton" update="msgs"/>
+                    <h:panelGrid columns="2" style="margin-top: 3%; margin-left: auto; margin-right: auto">
+                        <h:outputText value="Don't have account?"
+                                      style="text-align: left; font-family: Verdana; font-size: 14px; font-weight: bold"/>
+                        <p:link value="Sign Up" outcome="register" style="text-align: right; font-family: Verdana;
+                                        font-weight: bold; text-decoration: none; font-size: 16px; color: dodgerblue"/>
+                    </h:panelGrid>
+                    <p:growl id="msgs" showDetail="true" />
+                </h:form>
+            </div>
+        </div>
+        <style type="text/css">
+            body {
+                background-color: ghostwhite;
+            }
+
+            #centerForm {
+                border: 1px solid gainsboro;
+                width: 500px;
+                border-radius: 5px;
+                background-color: white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%);
+                padding-bottom: 20px;
+            }
+
+            #logoText {
+                text-align: center;
+                font-family: Arial, sans-serif;
+                margin: 25px;
+            }
+
+            #loginText {
+                text-align: center;
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+
+            #mainForm {
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            #mainGrid {
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+
+            .inputText {
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                height: 40px;
+                padding-left: 10px;
+                box-shadow: none;
+                border: 1px solid gainsboro;
+                border-radius: 5px;
+            }
+
+            #mainForm .ui-button {
+                width: 94.5%;
+                height: 40px;
+                color: white;
+                background-color: dodgerblue;
+                margin: 2% auto 0px auto;
+                left: 3%;
+                box-shadow: inset 0px 0px 0px 20px dodgerblue;
+                font-weight: bold; font-size: 16px;
+                border: dodgerblue; border-radius: 5px;
+                text-shadow: none;
+            }
+        </style>
+    </h:body>
+</html>

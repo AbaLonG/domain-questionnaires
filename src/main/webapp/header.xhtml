@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <div id="header">
+        <div id="headerContent">
+            <h2 style="font-family: Arial, Helvetica, sans-serif; float: left; padding-top: 5px;
+                        font-size: 22px; font-weight: bold; text-decoration: none;">
+                LOGO<span style="color: dodgerblue">TYPE</span>
+            </h2>
+            <div id="rightHeader">
+                <c:if test="#{profileBean.logged}">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <h:link outcome="fields" class="headerLink" style="float: left">Fields</h:link>
+                                </td>
+                                <td style="text-align: center;">
+                                    <h:link outcome="responses" class="headerLink" style="margin-left: 35px">Responses</h:link>
+                                </td>
+                                <td width="50%">
+                                    <h:form>
+                                        <div id="settingsMenu">
+                                            <p:menuButton value="#{profileBean.fullName}">
+                                                <p:menuitem value="Edit profile" outcome="editProfile"/>
+                                                <p:menuitem value="Change Password" outcome="changePassword"/>
+                                                <p:menuitem value="Log Out" action="#{profileBean.logOut}"/>
+                                            </p:menuButton>
+                                        </div>
+                                    </h:form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </c:if>
+                <c:if test="#{!profileBean.logged}">
+                    <h:link outcome="login" class="headerLink" style="float: right; margin-top: 8px;">Log In</h:link>
+                </c:if>
+            </div>
+        </div>
+    </div>
+    <style type="text/css">
+        .body {
+            margin: 0px;
+        }
+
+        #header {
+            width: 100%;
+            height: 70px;
+            margin-top: -5px;
+            background-color: white;
+            border-bottom: 1px solid silver;
+        }
+
+        #headerContent {
+            width: 75%;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #rightHeader {
+            width: 450px;
+            height: 60%;
+            float: right;
+            margin-top: 16px;
+        }
+
+        .headerLink {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            color: darkgray;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        #settingsMenu {
+            font-size: 16px;
+            text-align: center;
+        }
+
+        #settingsMenu .ui-menubutton, #settingsMenu .ui-button {
+            background-color: white;
+            border: none;
+            color: dodgerblue;
+        }
+
+        #settingsMenu .ui-button .ui-state-hover {
+            box-shadow: none;
+            border: none
+        }
+
+        #settingsMenu .ui-menubutton .ui-state-hover {
+            border: none;
+            box-shadow: none;
+        }
+
+        #settingsMenu .ui-menubutton .ui-state-focus {
+            border: none;
+            box-shadow: none;
+        }
+
+        #settingsMenu .ui-state-focus {
+            border: none;
+            box-shadow: none;
+        }
+
+        .ui-menu {
+            background-color: white;
+            border: 1px solid gainsboro;
+            box-shadow: none;
+        }
+
+        .ui-menu-list .ui-state-hover {
+            background-color: white;
+            box-shadow: none;
+            border: 1px solid dodgerblue;
+        }
+    </style>
+</html>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Fields</title>
+</h:head>
+<h:body style="background-color: ghostwhite">
+    <ui:include src="header.xhtml"/>
+    <div style="border: 1px solid gainsboro; width: 70%; border-radius: 8px;
+                background-color: white; margin: 50px auto 0 auto;">
+        <h:form>
+            <p:panel id="basic"
+                     style="border: none; border-bottom: 1px solid gainsboro; border-radius: 0px;">
+                <h:panelGrid columns="2" id="fieldsColumns" style="width: 100%">
+                    <h:column>
+                        <h:outputText value="Fields"
+                                      style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;
+                                             width: 100%; height: 60px; margin-left: 0px;"/>
+                    </h:column>
+                    <h:column>
+                        <h:form>
+                        <p:commandButton id="showDialogButton" value="ADD FIELD"
+                                         icon="ui-icon-plusthick" type="button" onclick="PF('dlg').show()"
+                                style="width: 140px; height: 40px; color: white; background-color: dodgerblue; float: right;
+                                border: 1px solid dodgerblue; border-radius: 7px; font-family: Arial, Helvetica, sans-serif;
+                                font-size: 16px; box-shadow: inset 0px 20px 0px 20px dodgerblue; text-shadow: none"/>
+
+                            <p:dialog widgetVar="dlg" resizable="false" width="640" height="500"
+                                      header="Add Field" draggable="false" modal="true" id="newFieldDialog"
+                                      style="border: 1px solid gainsboro; box-shadow: none; border-radius: 10px; padding: 0px;">
+                                <ui:include src="newForm.xhtml"/>
+                            </p:dialog>
+                        </h:form>
+                    </h:column>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+        <div id="fieldsForm" style="width: 95%; margin-left: auto; margin-right: auto;">
+            <p:dataTable var="field" value="#{fieldsBean.fields}" id="fieldsData" paginator="true" rows="10"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,20">
+                <p:column headerText="Label">
+                    <h:outputText value="#{field.label}" />
+                </p:column>
+
+                <p:column headerText="Type">
+                    <h:outputText value="#{field.stringType()}" />
+                </p:column>
+
+                <p:column headerText="Required">
+                    <h:outputText value="#{field.required}" />
+                </p:column>
+
+                <p:column headerText="Is Active">
+                    <h:outputText value="#{field.active}" />
+                </p:column>
+
+                <p:column style="width: 50px; text-align: center">
+                    <div id="fieldSettings">
+                        <p:commandButton icon="ui-icon-pencil" update="fieldsData" oncomplete="PF('dlg').show()"
+                                         style="width: 20px; height: 20px; background-color: transparent; border: none">
+                            <f:setPropertyActionListener value="#{field}" target="#{fieldsBean.selectedField}"/>
+                        </p:commandButton>
+                        <p:commandButton icon="ui-icon-trash" update="fieldsData" action="#{fieldsBean.delete}"
+                                         style="width: 20px; height: 20px; background-color: transparent; border: none">
+                            <f:setPropertyActionListener value="#{field}" target="#{fieldsBean.selectedField}"/>
+                        </p:commandButton>
+                    </div>
+                </p:column>
+            </p:dataTable>
+        </div>
+        <style type="text/css">
+            #fieldsForm .ui-state-default {
+                background-color: white;
+                height: 40px;
+                text-align: left;
+                border: 1px solid white;
+                border-bottom: 1px solid gainsboro;
+                font-weight: bolder;
+            }
+
+            #fieldsData {
+                border: none;
+            }
+
+            #fieldsData .ui-widget-content {
+                border: none;
+            }
+
+            #fieldsData .ui-datatable-even, #fieldsData .ui-datatable-odd {
+                border: none;
+                height: 40px;
+            }
+
+            #fieldsData td {
+                border: none;
+            }
+
+            #fieldsData .ui-datatable-tablewrapper {
+                border-bottom: 1px solid gainsboro;
+            }
+
+            #fieldsData #fieldsData_paginator_bottom {
+                background-color: white;
+                margin-top: 10px;
+                border: none;
+            }
+
+            #fieldsData .ui-paginator-current {
+                float: left;
+                font-size: 16px;
+                font-family: Arial, Helvetica, sans-serif;
+                margin-top: 10px;
+            }
+
+            #fieldsData {
+                border-bottom: none;
+            }
+
+            #fieldsData .ui-paginator-pages {
+                background-color: dodgerblue;
+                width: 30px;
+                height: 30px;
+                border-radius: 3px;
+                margin-bottom: 15px;
+            }
+
+            #fieldsData .ui-paginator-page {
+                border: none;
+                background-color: dodgerblue;
+                text-align: center;
+                vertical-align: sub;
+                height: 0px;
+                box-shadow: inset 0px -2px 0px 20px dodgerblue;
+                text-shadow: none;
+                color: white;
+                font-size: 16px;
+                font-weight: normal;
+                border-radius: 5px;
+            }
+
+            #fieldsData_paginator_bottom .ui-paginator-prev {
+                border: none;
+                height: 15px;
+            }
+
+            #fieldsData_paginator_bottom .ui-paginator-next {
+                border: none;
+                height: 15px;
+            }
+
+            #fieldsData .ui-paginator-rpp-options {
+                float: right;
+                border: 1px solid gainsboro;
+                font-weight: normal;
+                width: 55px;
+            }
+        </style>
+        <style type="text/css">
+
+            #rightInput textarea {
+                height: 120px;
+            }
+
+            .ui-dialog-titlebar {
+                background-color: ghostwhite;
+                height: 50px;
+                border-bottom: 1px solid gainsboro;
+                font-size: 24px;
+                margin-top: 5px;
+            }
+
+            .labelClass {
+                font-size: 20px;
+                float: right;
+                color: gray;
+                font-family: Arial;
+                margin-top: 20px;
+                box-shadow: none;
+            }
+
+            .ui-selectonemenu label.ui-selectonemenu-label {
+                box-shadow: none;
+            }
+
+            #addFieldForm .ui-selectonemenu .ui-selectonemenu-trigger {
+                background-color: white;
+                border: none;
+            }
+
+            .ui-selectonemenu .ui-selectonemenu-trigger {
+                background-color: white;
+                border: none;
+            }
+
+            .ui-chkbox-box, .ui-chkbox-icon {
+                background-color: white;
+                box-shadow: none;
+                border-radius: 0px;
+            }
+
+            .ui-selectonemenu-trigger .ui-state-hover, ui-state-focus {
+                box-shadow: none;
+            }
+
+            .ui-selectonemenu label.ui-selectonemenu-label {
+                margin-top: 7px;
+            }
+
+            .ui-selectonemenu-panel {
+                box-shadow: none;
+            }
+
+            .formButton {
+                height: 40px;
+                width: 110px;
+                box-shadow: none;
+                font-size: 18px;
+                margin-right: 15px;
+                text-shadow: none;
+                border-radius: 7px;
+            }
+
+            .ui-dialog-footer {
+                background-color: ghostwhite;
+                border: none;
+                border-top: 1px solid gainsboro;
+                height: 60px;
+            }
+
+            .ui-dialog .ui-dialog-content {
+                padding: 0px;
+            }
+
+            .ui-selectonemenu-items-wrapper .ui-state-highlight {
+                color: white;
+                background-color: dodgerblue;
+                box-shadow: none;
+                text-shadow: none;
+            }
+
+            .ui-selectonemenu-items-wrapper .ui-state-hover {
+                background-color: white;
+                box-shadow: none;
+                border: 1px solid dodgerblue;
+            }
+        </style>
+    </div>
+</h:body>
+</html>

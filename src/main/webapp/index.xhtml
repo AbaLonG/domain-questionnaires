@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jstl/core">
+<h:head>
+    <title>Questionnaires</title>
+</h:head>
+<h:body style="background-color: ghostwhite">
+    <ui:include src="header.xhtml"/>
+    <div style="border: 1px solid gainsboro; width: 27%; border-radius: 8px; padding: 0px 0px 30px 45px;
+                background-color: white; margin: 50px auto 60px auto;">
+        <h:form>
+            <div style="width: 90%; display: grid" id="questionsForm">
+                <c:forEach var="field" items="#{fieldsBean.fields}" varStatus="status">
+                    <p:outputLabel class="fieldLabelField" value="#{field.label}"/>
+                    <c:if test="#{field.stringType() eq 'Single line text'}">
+                        <p:inputText class="singleLineTextField" required="#{field.required}"
+                                     value="#{responseBean.textes[status.index]}"/>
+                    </c:if>
+                    <c:if test="#{field.stringType() eq 'Multi line text'}">
+                        <p:inputTextarea class="multiLineTextField" autoResize="false" rows="5"
+                                         value="#{responseBean.textes[status.index]}" required="#{field.required}"/>
+                    </c:if>
+                    <c:if test="#{field.stringType() eq 'Date'}">
+                        <p:calendar class="calendarField" styleClass="dateField" required="#{field.required}"
+                                    showOn="button" value="#{responseBean.dates[status.index]}"/>
+                    </c:if>
+                    <c:if test="#{field.stringType() eq 'Radio button'}">
+                        <p:selectOneRadio styleClass="radioButtonField" layout="grid" columns="1"
+                                          value="#{responseBean.textes[status.index]}" required="#{field.required}">
+                            <f:selectItems value="#{field.options}" var="o" itemLabel="#{o.optionText}" itemValue="#{o.optionText}"/>
+                        </p:selectOneRadio>
+                    </c:if>
+                    <c:if test="#{field.stringType() eq 'Check box'}">
+                        <p:selectManyCheckbox styleClass="checkBoxField" layout="grid" columns="1"
+                                              value="#{responseBean.checks[status.index]}" required="#{field.required}">
+                            <f:selectItems value="#{field.options}" var="o" itemLabel="#{o.optionText}" itemValue="#{o.optionText}"/>
+                        </p:selectManyCheckbox>
+                    </c:if>
+                    <c:if test="#{field.stringType() eq 'Combo box'}">
+                        <p:selectOneMenu styleClass="comboboxField" value="#{responseBean.textes[status.index]}" required="#{field.required}">
+                            <f:selectItems value="#{field.options}" var="o" itemLabel="#{o.optionText}" itemValue="#{o.optionText}"/>
+                        </p:selectOneMenu>
+                    </c:if>
+                </c:forEach>
+                <div id="footer">
+                    <p:commandButton value="SUBMIT" update="msgs" styleClass="submitButton" action="#{responseBean.sendResponse}"/>
+                </div>
+            </div>
+            <p:growl id="msgs" showDetail="true" />
+            <style type="text/css">
+                .fieldLabelField {
+                    margin-top: 30px;
+                    color: dimgray;
+                    font-size: 22px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    margin-bottom: 10px;
+                }
+
+                .singleLineTextField {
+                    border: 1px solid gainsboro;
+                    box-shadow: none;
+                    height: 40px;
+                    border-radius: 7px;
+                    margin-left: 10px;
+                    padding-left: 10px;
+                }
+
+                .singleLineTextField.ui-state-focus {
+                    box-shadow: none;
+                }
+
+                .multiLineTextField {
+                    border: 1px solid gainsboro;
+                    box-shadow: none;
+                    border-radius: 7px;
+                    margin-left: 10px;
+                }
+
+                #questionsForm .ui-inputtextarea {
+                    box-shadow: none;
+                    border: 1px solid gainsboro;
+                    margin-left: 10px;
+                }
+
+                #questionsForm .ui-selectonemenu {
+                    min-width: 96px;
+                    background-color: white;
+                    border: 1px solid gainsboro;
+                    box-shadow: none;
+                    height: 46px;
+                    border-radius: 6px;
+                    margin-left: 10px;
+                }
+
+                .ui-selectonemenu label.ui-selectonemenu-label {
+                    background-color: white;
+                    border: none;
+                    box-shadow: none;
+                    padding-left: 10px;
+                    padding-top: 14px;
+                    font-size: 18px;
+                }
+
+                #questionsForm .ui-selectonemenu .ui-selectonemenu-trigger {
+                    background-color: white;
+                    border: none;
+                }
+
+                .ui-selectonemenu-panel {
+                    box-shadow: none;
+                    border: 1px solid gainsboro;
+                }
+
+                .ui-selectonemenu-item {
+                    background-color: white;
+                    border: none;
+                    box-shadow: none;
+                    text-shadow: none;
+                }
+
+                .ui-selectonemenu-items-wrapper .ui-state-highlight {
+                    color: white;
+                    background-color: dodgerblue;
+                    box-shadow: none;
+                    text-shadow: none;
+                }
+
+                .ui-selectonemenu-items-wrapper .ui-state-hover {
+                    background-color: white;
+                    box-shadow: none;
+                    border: 1px solid dodgerblue;
+                }
+
+                #questionsForm .ui-radiobutton-box {
+                    background-color: white;
+                }
+
+                #questionsForm .ui-selectoneradio {
+                    margin-left: 10px;
+                }
+
+                .ui-calendar.dateField {
+                    border: 1px solid gainsboro;
+                    box-shadow: none;
+                    border-radius: 6px;
+                    margin-left: 10px;
+                    height: 44px;
+                }
+
+                .ui-calendar .ui-inputfield {
+                    width: 390px;
+                    border: none;
+                    box-shadow: none;
+                    padding-left: 10px;
+                    padding-top: 10px;
+                }
+
+                .ui-datepicker-trigger {
+                    background-color: white;
+                    border: none;
+                    width: 40px;
+                    height: 98%;
+                }
+
+                .ui-selectmanycheckbox {
+                    margin-left: 10px;
+                }
+
+                .ui-chkbox-box {
+                    background-color: white;
+                }
+
+                #footer .ui-button {
+                    background-color: dodgerblue;
+                    height: 47px;
+                    width: 150px;
+                    margin-top: 40px;
+                    color: white;
+                    border: 1px solid dodgerblue;
+                    text-shadow: none;
+                    font-family: Arial;
+                    font-size: 19px;
+                    font-weight: normal;
+                    border-radius: 6px;
+                    margin-left: 10px;
+                }
+
+                #footer .ui-button-text {
+                    background-color: dodgerblue;
+                    height: 26px;
+                    border: 1px solid dodgerblue;
+                    border-radius: 5px;
+                    margin-top: 0px;
+                    padding-top: 12px;
+                }
+            </style>
+        </h:form>
+    </div>
+</h:body>
+</html>
